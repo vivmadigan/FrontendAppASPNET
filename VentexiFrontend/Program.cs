@@ -1,29 +1,29 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using VentexiFrontend.Services;
+
+using VentexiFrontend.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services
+    .AddHttpClient<IInvoiceApiClient, InvoiceApiClient>(client =>
+    {
+        client.BaseAddress = new Uri("https://localhost:7023/api/");
+        client.DefaultRequestHeaders.Add("x-api-key", "1a76c263-4d83-4c98-b913-9029f9dfad7d");
+    });
+
 builder.Services.AddControllersWithViews();
-
-
-
 
 var app = builder.Build();
 
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
-
-app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
 
-app.UseAuthorization();
+// (no authentication/authorization middleware for this smoke-test)
 
-app.MapStaticAssets();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Invoice}/{action=Index}/{id?}")
-    .WithStaticAssets();
-
+app.MapDefaultControllerRoute();
 
 app.Run();

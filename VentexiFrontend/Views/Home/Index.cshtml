@@ -1,0 +1,26 @@
+﻿@model IEnumerable<InvoiceModel>
+
+<h1>My Invoices</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Invoice ID</th>
+        <th>Booking ID</th>
+        <th>Event</th>
+        <th>Issued</th>
+        <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach(var inv in Model) {
+        <tr>
+            <td>@inv.InvoiceId</td>
+            <td>@inv.BookingId</td>
+            <td>@inv.EventName</td>
+            <td>@inv.IssuedDate.ToShortDateString()</td>
+            <td>@inv.Total.ToString("C")</td>
+        </tr>
+    }
+    </tbody>
+</table>

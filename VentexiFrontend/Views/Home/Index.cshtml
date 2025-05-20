@@ -1,55 +1,8 @@
-﻿@model IEnumerable<InvoiceModel>
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
 
-<div class="portal-wrapper">
-    <nav>
-        <ul>
-            <li><a href="#">Dashboard</a></li>
-            <li><a class="active" href="#">Invoices</a></li>
-            <li><a href="#">Bookings</a></li>
-        </ul>
-    </nav>
-
-    <header>
-        <div class="card">
-            <h3>@Model.Count()</h3>
-            <p>Total Invoices</p>
-        </div>
-        <div class="card">
-            <h3>@Model.Count(i=>i.InvoicePaid)</h3>
-            <p>Paid</p>
-        </div>
-        <div class="card">
-            <h3>@Model.Count(i=>!i.InvoicePaid)</h3>
-            <p>Unpaid</p>
-        </div>
-    </header>
-
-    <main>
-        <section class="card">
-            <h2>Invoice List</h2>
-            <ul class="invoice-list">
-                @foreach(var inv in Model) {
-                    <li class="invoice-item">
-                        <div class="left">
-                            <strong>@inv.BookingId</strong>
-                            <span>@inv.EventName</span>
-                        </div>
-                        <div class="middle">
-                            @inv.IssuedDate:yyyy-MM-dd
-                        </div>
-                        <div class="right">
-                            <span class="status @(inv.InvoicePaid? "paid":"unpaid")">
-                                @(inv.InvoicePaid? "Paid":"Unpaid")
-                            </span>
-                            <strong>@inv.Total:C</strong>
-                        </div>
-                    </li>
-                }
-            </ul>
-        </section>
-    </main>
-
-    <footer>
-        © 2025 VentixeFrontend – <a href="#">Privacy</a>
-    </footer>
-</div>
+<section class="card">
+    <h2>Welcome to your Dashboard</h2>
+    <!-- put your dashboard cards or stats here -->
+</section>

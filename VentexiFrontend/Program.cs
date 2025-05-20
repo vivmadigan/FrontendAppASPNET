@@ -24,6 +24,8 @@ app.UseRouting();
 
 // (no authentication/authorization middleware for this smoke-test)
 
-app.MapDefaultControllerRoute();
-
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
 app.Run();

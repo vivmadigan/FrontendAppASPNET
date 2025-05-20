@@ -1,4 +1,6 @@
-﻿namespace VentexiFrontend.Models
+﻿using System.Text.Json.Serialization;
+
+namespace VentexiFrontend.Models
 {
     public class InvoiceModel
     {
@@ -33,6 +35,9 @@
         public decimal Total { get; set; }
 
         // line-items
+        // The API returns its line-items in a JSON array named "items",
+        // so we tell System.Text.Json to bind "items" → this property.
+        [JsonPropertyName("items")]
         public List<InvoiceItemModel> InvoiceItems { get; set; }
             = new List<InvoiceItemModel>();
     }

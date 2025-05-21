@@ -32,8 +32,8 @@
         <!-- 2a) List panel -->
         <aside class="invoice-list-panel">
             <div class="list-header">
-                <input type="text" class="search-input" placeholder="Search…" />
-                <button class="btn btn-primary">Add</button>
+                <input type="text" class="search-input" placeholder="Keyword Search…" />
+                <button class="btn btn-primary">Search</button>
             </div>
             <ul class="invoice-list">
                 @foreach (var x in vm.Invoices)
@@ -86,20 +86,6 @@
                 </div>
 
                 <div class="details-body">
-                    @* DEBUG: show how many items we got *@
-                    <p>
-                        <strong>Debug:</strong> InvoiceItems.Count = @inv.InvoiceItems.Count()
-                    </p>
-
-                    @* DEBUG: list them out raw *@
-                    <ul>
-                        @foreach(var dbg in inv.InvoiceItems)
-                        {
-                            <li>
-                                @dbg.TicketCategory – @dbg.Quantity × @dbg.Price (→ @dbg.Amount)
-                            </li>
-                        }
-                    </ul>
 
                     <!-- billing info -->
                     <div class="from-to">
@@ -155,7 +141,6 @@
                         </tfoot>
                     </table>
 
-                    <!-- due-date note -->
                     @if (inv.DueDate is DateTime d)
                     {
                         <p class="notes">

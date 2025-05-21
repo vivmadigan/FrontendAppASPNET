@@ -15,7 +15,6 @@ namespace VentexiFrontend.Controllers
         private readonly IInvoiceApiClient _api;
         public InvoicesController(IInvoiceApiClient api) => _api = api;
 
-        // GET /Invoices?selectedId=INV10012
         public async Task<IActionResult> Index(string? selectedId)
         {
             var userId = "user-456";

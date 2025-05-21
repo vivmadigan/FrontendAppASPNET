@@ -11,7 +11,7 @@ namespace VentexiFrontend.Controllers
     {
         public IActionResult Index()
         {
-            // build your dashboard view-model here
+           
             return View();
         }
     }

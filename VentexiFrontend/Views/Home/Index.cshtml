@@ -2,6 +2,20 @@
     ViewData["Title"] = "Dashboard";
 }
 
+<div class="login-stubs">
+    <a asp-controller="Account"
+       asp-action="Login"
+       asp-route-role="User">
+        Login as User
+    </a>
+    |
+    <a asp-controller="Account"
+       asp-action="Login"
+       asp-route-role="Admin">
+        Login as Admin
+    </a>
+</div>
+
 <section class="card">
     <h2>Welcome to your Dashboard</h2>
     <!-- put your dashboard cards or stats here -->

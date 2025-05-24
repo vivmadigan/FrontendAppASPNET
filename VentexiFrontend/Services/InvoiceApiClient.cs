@@ -7,6 +7,7 @@ namespace VentexiFrontend.Services
     {
         Task<IEnumerable<InvoiceModel>> GetMyInvoicesAsync(string userId);
         Task<InvoiceModel> PayInvoiceAsync(string userId, string invoiceId);
+        Task<IEnumerable<InvoiceModel>> GetAllInvoicesAsync();
     }
 
     public class InvoiceApiClient : IInvoiceApiClient
@@ -47,6 +48,19 @@ namespace VentexiFrontend.Services
             // returns the updated invoice (your API returns Ok(result.Invoice))
             return await res.Content.ReadFromJsonAsync<InvoiceModel>()
                    ?? throw new Exception("Empty response from PayInvoice");
+        }
+        public async Task<IEnumerable<InvoiceModel>> GetAllInvoicesAsync()
+        {
+            // GET /api/Invoices/admin-get-all-invoices
+            using var req = new HttpRequestMessage(HttpMethod.Get, "Invoices/admin-get-all-invoices");
+            using var res = await _http.SendAsync(req);
+            if (!res.IsSuccessStatusCode)
+            {
+                var text = await res.Content.ReadAsStringAsync();
+                throw new Exception($"Invoice API failed ({res.StatusCode}): {text}");
+            }
+            var invoices = await res.Content.ReadFromJsonAsync<IEnumerable<InvoiceModel>>();
+            return invoices ?? Enumerable.Empty<InvoiceModel>();
         }
     }
 }

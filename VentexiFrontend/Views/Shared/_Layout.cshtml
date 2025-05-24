@@ -18,6 +18,29 @@
             <div class="header-info">
                 <h2>@ViewData["Title"]</h2>
                 <span class="header-info-text">Hello TEST, Welcome back</span>
+                @* ——— STUB LOGIN/LOGOUT ——— *@
+                <div class="stub-auth-links">
+                    <a asp-controller="Account"
+                       asp-action="Login"
+                       asp-route-role="User">
+                        Login as User
+                    </a>
+                    <a asp-controller="Account"
+                       asp-action="Login"
+                       asp-route-role="Admin">
+                        Login as Admin
+                    </a>
+                    <form asp-controller="Account"
+                          asp-action="Logout"
+                          method="post"
+                          style="display:inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit"
+                                style="background:none;border:none;padding:0;cursor:pointer">
+                            Sign Out
+                        </button>
+                    </form>
+                </div>
             </div>
 
             <input type="text" id="nav-search" class="header-search" placeholder="Search anything" />

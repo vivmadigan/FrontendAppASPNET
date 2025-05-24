@@ -137,7 +137,11 @@
                 </div>
 
                 <div class="details-footer">
-                    <button class="btn">Download</button>
+                    <a asp-action="Download"
+                       asp-route-id="@inv.InvoiceId"
+                       class="btn btn-secondary">
+                        Download
+                    </a>
                     <button class="btn btn-primary">Send Invoice</button>
                     <button class="btn">Hold Invoice</button>
                 </div>

@@ -8,6 +8,8 @@ namespace VentexiFrontend.Services
         Task<IEnumerable<InvoiceModel>> GetMyInvoicesAsync(string userId);
         Task<InvoiceModel> PayInvoiceAsync(string userId, string invoiceId);
         Task<IEnumerable<InvoiceModel>> GetAllInvoicesAsync();
+        Task<byte[]> AdminDownloadInvoicePdfAsync(string invoiceId);
+        Task<byte[]> DownloadInvoicePdfAsync(string userId, string invoiceId);
     }
 
     public class InvoiceApiClient : IInvoiceApiClient
@@ -62,5 +64,39 @@ namespace VentexiFrontend.Services
             var invoices = await res.Content.ReadFromJsonAsync<IEnumerable<InvoiceModel>>();
             return invoices ?? Enumerable.Empty<InvoiceModel>();
         }
+        public async Task<byte[]> AdminDownloadInvoicePdfAsync(string invoiceId)
+        {
+            // Because this client will be the AdminClient (in your Admin controller),
+            // we call the admin‐only endpoint:
+            var url = $"Invoices/admin-download-invoice/{invoiceId}/pdf";
+
+            using var req = new HttpRequestMessage(HttpMethod.Get, url);
+            using var res = await _http.SendAsync(req);
+
+            if (!res.IsSuccessStatusCode)
+            {
+                var text = await res.Content.ReadAsStringAsync();
+                throw new Exception($"Invoice API failed ({res.StatusCode}): {text}");
+            }
+
+            return await res.Content.ReadAsByteArrayAsync();
+        }
+        public async Task<byte[]> DownloadInvoicePdfAsync(string userId, string invoiceId)
+        {
+            var url = $"Invoices/user-download-invoice/{invoiceId}/pdf";
+            using var req = new HttpRequestMessage(HttpMethod.Get, url);
+
+            // add the required x-user-id header
+            req.Headers.Add("x-user-id", userId);
+
+            using var res = await _http.SendAsync(req);
+            if (!res.IsSuccessStatusCode)
+            {
+                var text = await res.Content.ReadAsStringAsync();
+                throw new Exception($"Invoice API failed ({res.StatusCode}): {text}");
+            }
+            return await res.Content.ReadAsByteArrayAsync();
+        }
+
     }
 }

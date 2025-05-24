@@ -39,6 +39,17 @@ namespace VentexiFrontend.Controllers
             await _api.PayInvoiceAsync(userId, id);
             return RedirectToAction("Index", new { selectedId = id });
         }
+        public async Task<IActionResult> UserDownload(string id)
+        {
+            // Hard-coded userId for now:
+            var userId = "user-456";
+            var pdf = await _api.DownloadInvoicePdfAsync(userId, id);
 
+            return File(
+                pdf,
+                contentType: "application/pdf",
+                fileDownloadName: $"invoice_{id}.pdf"
+            );
+        }
     }
 }

@@ -24,5 +24,14 @@ namespace VentexiFrontend.Controllers
             };
             return View(vm);
         }
+        public async Task<IActionResult> Download(string id)
+        {
+            var pdf = await _api.AdminDownloadInvoicePdfAsync(id);
+            return File(
+                pdf,
+                contentType: "application/pdf",
+                fileDownloadName: $"invoice_{id}.pdf"
+            );
+        }
     }
 }

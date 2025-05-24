@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddHttpClient<IInvoiceApiClient, InvoiceApiClient>(client =>
     {
-        client.BaseAddress = new Uri("https://localhost:7023/api/");
+        client.BaseAddress = new Uri("https://ventixe-invoice-microservice-group3.azurewebsites.net/api/");
         client.DefaultRequestHeaders.Add("x-api-key", "1a76c263-4d83-4c98-b913-9029f9dfad7d");
     });
 

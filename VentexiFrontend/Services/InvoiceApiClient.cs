@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using VentexiFrontend.Models;
+using VentexiFrontend.ViewModels;
 
 namespace VentexiFrontend.Services
 {
@@ -10,6 +11,8 @@ namespace VentexiFrontend.Services
         Task<IEnumerable<InvoiceModel>> GetAllInvoicesAsync();
         Task<byte[]> AdminDownloadInvoicePdfAsync(string invoiceId);
         Task<byte[]> DownloadInvoicePdfAsync(string userId, string invoiceId);
+        Task<InvoiceModel> AdminCreateInvoiceAsync(CreateManualInvoiceViewModel form);
+
     }
 
     public class InvoiceApiClient : IInvoiceApiClient
@@ -96,6 +99,19 @@ namespace VentexiFrontend.Services
                 throw new Exception($"Invoice API failed ({res.StatusCode}): {text}");
             }
             return await res.Content.ReadAsByteArrayAsync();
+        }
+        public async Task<InvoiceModel> AdminCreateInvoiceAsync(CreateManualInvoiceViewModel vm)
+        {
+
+            using var res = await _http.PostAsJsonAsync("Invoices/admin-invoice-creation", vm);
+            if (!res.IsSuccessStatusCode)
+            {
+                var text = await res.Content.ReadAsStringAsync();
+                throw new Exception($"Invoice API failed ({res.StatusCode}): {text}");
+            }
+
+            return await res.Content.ReadFromJsonAsync<InvoiceModel>()
+                   ?? throw new Exception("Empty response from AdminCreateInvoice");
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using VentexiFrontend.Models;
 using VentexiFrontend.Services;
 using VentexiFrontend.ViewModels;
 
@@ -33,5 +34,30 @@ namespace VentexiFrontend.Controllers
                 fileDownloadName: $"invoice_{id}.pdf"
             );
         }
+        [HttpGet]
+        public IActionResult NewInvoice()
+        {
+            // start with an empty invoice
+            var vm = new InvoiceModel
+            {
+                IssuedDate = System.DateTime.Today,
+                InvoiceItems = new List<InvoiceItemModel> {
+                    new InvoiceItemModel()  // one blank row
+                }
+            };
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SaveInvoice(CreateManualInvoiceViewModel vm)
+        {
+            if (!ModelState.IsValid)
+                return View("NewInvoice", vm);
+
+            var created = await _api.AdminCreateInvoiceAsync(vm);
+            return RedirectToAction("Index", new { selectedId = created.InvoiceId });
+        }
+
     }
 }

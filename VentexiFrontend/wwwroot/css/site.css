@@ -114,13 +114,52 @@ html, body {
 }
 
 .portal-wrapper {
+    /* keep your centering & max-width */
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem;
+    /* reinstate the grid layout */
     height: 100dvh;
     display: grid;
-    gap: 1rem;
     grid-template-columns: 300px 1fr;
     grid-template-rows: auto 1fr auto;
-    grid-template-areas: "nav header" "nav main" "nav footer";
-    padding: 1rem;
+    grid-template-areas:
+        "nav header"
+        "nav main"
+        "nav footer";
+    gap: 1rem;
+}
+
+/* 2) Collapse to a single column at tablet/small-desktop widths */
+@media (max-width: 1024px) {
+    .portal-wrapper {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "main"
+            "footer";
+    }
+    /* hide the sidebar completely (or you can choose to shrink it) */
+    nav.sidebar {
+        display: none;
+    }
+}
+
+/* 3) (Optional) Bring the nav back as a top bar on mobile */
+@media (max-width: 600px) {
+    /* example: make header full-width and smaller */
+    header {
+        padding: 1rem 0.5rem;
+    }
+
+    .header-info h2 {
+        font-size: 1.5rem;
+    }
+    /* shrink your search box */
+    #nav-search {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
 }
 
 nav {
@@ -840,4 +879,28 @@ tbody td {
     gap: 0.5rem;
     justify-content: flex-end;
     border-top: 1px solid var(--border-color);
+}
+
+/* shorthand grid helpers */
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+/* tighten up spacing on form-groups when inside a .compact-form */
+.compact-form .form-group {
+    margin-bottom: 0.5rem;
+}
+
+/* smaller headers to save vertical space */
+.compact-form h4 {
+    margin: 1rem 0 0.5rem;
+    font-size: 1.1rem;
 }

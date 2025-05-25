@@ -142,8 +142,11 @@
                        class="btn btn-secondary">
                         Download
                     </a>
-                    <button class="btn btn-primary">Send Invoice</button>
-                    <button class="btn">Hold Invoice</button>
+                    <a asp-action="NewInvoice"
+                       asp-controller="AdminInvoices"
+                       class="btn btn-success">
+                        Create Invoice
+                    </a>
                 </div>
             </section>
         }

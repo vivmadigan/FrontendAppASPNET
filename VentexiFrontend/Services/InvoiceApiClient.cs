@@ -12,7 +12,8 @@ namespace VentexiFrontend.Services
         Task<byte[]> AdminDownloadInvoicePdfAsync(string invoiceId);
         Task<byte[]> DownloadInvoicePdfAsync(string userId, string invoiceId);
         Task<InvoiceModel> AdminCreateInvoiceAsync(CreateManualInvoiceViewModel form);
-
+        Task<InvoiceModel> AdminUpdateInvoiceAsync(UpdateInvoiceViewModel vm);
+        Task<InvoiceModel> GetInvoiceByIdAsync(string id);
     }
 
     public class InvoiceApiClient : IInvoiceApiClient
@@ -112,6 +113,29 @@ namespace VentexiFrontend.Services
 
             return await res.Content.ReadFromJsonAsync<InvoiceModel>()
                    ?? throw new Exception("Empty response from AdminCreateInvoice");
+        }
+        public async Task<InvoiceModel> AdminUpdateInvoiceAsync(UpdateInvoiceViewModel vm)
+        {
+
+
+            // 2) Call the API
+            using var res = await _http.PutAsJsonAsync(
+                "Invoices/admin-update-invoice",
+                vm
+            );
+            if (!res.IsSuccessStatusCode)
+            {
+                var text = await res.Content.ReadAsStringAsync();
+                throw new Exception($"Invoice API failed ({res.StatusCode}): {text}");
+            }
+            return await res.Content.ReadFromJsonAsync<InvoiceModel>()
+                   ?? throw new Exception("Empty response from AdminUpdateInvoice");
+        }
+        public async Task<InvoiceModel> GetInvoiceByIdAsync(string id)
+        {
+            using var res = await _http.GetAsync($"Invoices/admin-get-user-invoice/{id}");
+            res.EnsureSuccessStatusCode();
+            return await res.Content.ReadFromJsonAsync<InvoiceModel>();
         }
 
     }

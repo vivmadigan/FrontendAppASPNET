@@ -113,17 +113,17 @@
                             {
                                 <tr>
                                     <td>@item.TicketCategory</td>
-                                    <td>@item.Price:C</td>
+                                    <td>@item.Price.ToString("C", sek)</td>
                                     <td>@item.Quantity</td>
-                                    <td>@item.Amount:C</td>
+                                    <td>@item.Amount.ToString("C", sek)</td>
                                 </tr>
                             }
                         </tbody>
                         <tfoot>
-                            <tr><td colspan="3">Subtotal</td><td>@inv.Subtotal:C</td></tr>
-                            <tr><td colspan="3">Tax</td><td>@inv.Tax:C</td></tr>
-                            <tr><td colspan="3">Fee</td><td>@inv.Fee:C</td></tr>
-                            <tr class="total"><td colspan="3">Total</td><td>@inv.Total:C</td></tr>
+                            <tr><td colspan="3">Subtotal</td><td>@inv.Subtotal.ToString("C", sek)</td></tr>
+                            <tr><td colspan="3">Tax</td><td>@inv.Tax.ToString("C", sek)</td></tr>
+                            <tr><td colspan="3">Fee</td><td>@inv.Fee.ToString("C", sek)</td></tr>
+                            <tr class="total"><td colspan="3">Total</td><td>@inv.Total.ToString("C", sek)</td></tr>
                         </tfoot>
                     </table>
 
@@ -146,6 +146,12 @@
                        asp-controller="AdminInvoices"
                        class="btn btn-success">
                         Create Invoice
+                    </a>
+                    <a asp-action="ChangeInvoice"
+                       asp-controller="AdminInvoices"
+                       asp-route-id="@inv.InvoiceId"
+                       class="btn btn-outline-primary">
+                        Change Invoice
                     </a>
                 </div>
             </section>

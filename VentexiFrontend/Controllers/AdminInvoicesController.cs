@@ -108,6 +108,40 @@ namespace VentexiFrontend.Controllers
             return RedirectToAction("Index", new { selectedId = updated.InvoiceId });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> SoftDeleteInvoice(string id)
+        {
+            var inv = await _api.GetInvoiceByIdAsync(id);
+
+            var vm = new DeleteInvoiceViewModel
+            {
+                InvoiceId = inv.InvoiceId,
+                UserId = inv.UserId,
+                BookingId = inv.BookingId,
+                EventId = inv.EventId,
+                UserName = inv.UserName,
+                EventName = inv.EventName,
+                Total = inv.Total
+            };
+            return View("SoftDeleteInvoice", vm);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConfirmSoftDelete(DeleteInvoiceViewModel vm)
+        {
+            if (!ModelState.IsValid)
+                return View("SoftDeleteInvoice", vm);
+
+            await _api.SoftDeleteInvoiceAsync(vm);
+            return RedirectToAction("Index");
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> HardDeleteInvoice(string invoiceId)
+        {
+            await _api.HardDeleteInvoiceAsync(invoiceId);
+            return RedirectToAction("Index");
+        }
+
 
     }
 }

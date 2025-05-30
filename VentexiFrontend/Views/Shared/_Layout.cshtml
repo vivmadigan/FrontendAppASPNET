@@ -95,6 +95,12 @@
                     <a asp-controller="Invoices" asp-action="Index">
                         <span class="nav-text">Invoices</span>
                     </a>
+                    
+                 @*@if (User.IsInRole("Admin")) {
+                     <a asp-controller="AdminBookings" asp-action="Index">Bookings</a>
+                        } else {
+                        <a asp-controller="Bookings" asp-action="Index">Bookings</a>
+                    }*@
                 </li>
 
                 <li class="nav-item">

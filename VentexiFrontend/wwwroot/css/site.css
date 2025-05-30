@@ -904,3 +904,90 @@ tbody td {
     margin: 1rem 0 0.5rem;
     font-size: 1.1rem;
 }
+
+/* VIV NEW delete card styles */
+/* wrap the two separate forms */
+.delete-card {
+    background: var(--card-background-color);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    margin-top: 1rem;
+}
+
+.delete-forms {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* action buttons all in one row, pink primary */
+.delete-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.warning-text {
+    color: var(--yellow-100);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+
+
+/* VIV NEW delete card styles */
+/* wrap the two separate forms */
+/* Container tweaks */
+.delete-card {
+    padding: 2rem;
+    background: var(--card-background-color);
+    margin: 1rem 0;
+}
+
+/* Stack the form inputs nicely */
+.delete-forms {
+    margin-bottom: 1.5rem;
+}
+
+/* Button row */
+.delete-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+    /* Make all .btns in this area slightly bigger */
+    .delete-actions .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 0.75rem;
+    }
+
+    /* Override primary for extra punch */
+    .delete-actions .btn-primary {
+        background-color: var(--primary-100);
+        border-color: var(--primary-100);
+        color: var(--gray-10);
+    }
+
+        .delete-actions .btn-primary:hover {
+            background-color: var(--primary-90);
+            border-color: var(--primary-90);
+        }
+
+    /* Keep cancel subtle */
+    .delete-actions .btn-secondary {
+        color: var(--gray-80);
+        background: transparent;
+        border: 1px solid var(--gray-40);
+    }
+
+        .delete-actions .btn-secondary:hover {
+            background: var(--gray-20);
+        }
+
+
+/* END VIV delete card styles */
+
+

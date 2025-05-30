@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text.Json;
 using VentexiFrontend.Models;
 using VentexiFrontend.ViewModels;
 
@@ -14,6 +15,11 @@ namespace VentexiFrontend.Services
         Task<InvoiceModel> AdminCreateInvoiceAsync(CreateManualInvoiceViewModel form);
         Task<InvoiceModel> AdminUpdateInvoiceAsync(UpdateInvoiceViewModel vm);
         Task<InvoiceModel> GetInvoiceByIdAsync(string id);
+        // hard delete by id
+        Task HardDeleteInvoiceAsync(string invoiceId);
+
+        // soft delete via PUT body
+        Task SoftDeleteInvoiceAsync(DeleteInvoiceViewModel form);
     }
 
     public class InvoiceApiClient : IInvoiceApiClient
@@ -40,6 +46,7 @@ namespace VentexiFrontend.Services
             var invoices = await res.Content.ReadFromJsonAsync<IEnumerable<InvoiceModel>>();
             return invoices ?? Enumerable.Empty<InvoiceModel>();
         }
+
         public async Task<InvoiceModel> PayInvoiceAsync(string userId, string invoiceId)
         {
             using var req = new HttpRequestMessage(
@@ -136,6 +143,17 @@ namespace VentexiFrontend.Services
             using var res = await _http.GetAsync($"Invoices/admin-get-user-invoice/{id}");
             res.EnsureSuccessStatusCode();
             return await res.Content.ReadFromJsonAsync<InvoiceModel>();
+        }
+        public async Task HardDeleteInvoiceAsync(string invoiceId)
+        {
+            var res = await _http.DeleteAsync($"Invoices/admin-hard-delete-invoice/{invoiceId}");
+            res.EnsureSuccessStatusCode();
+        }
+
+        public async Task SoftDeleteInvoiceAsync(DeleteInvoiceViewModel vm)
+        {
+            var res = await _http.PutAsJsonAsync("Invoices/admin-soft-delete-invoice", vm);
+            res.EnsureSuccessStatusCode();
         }
 
     }
